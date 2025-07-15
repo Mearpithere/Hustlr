@@ -4,7 +4,7 @@ A modern, responsive React e-commerce application featuring a comprehensive Prod
 
 ## 🎯 Product Card Demo
 
-**Live Demo**: [View Deployment](https://your-vercel-url.vercel.app/demo)
+**Live Demo**: [https://scintillating-florentine-877b5b.netlify.app/](https://scintillating-florentine-877b5b.netlify.app/)
 
 ### Demo Pages
 - **Home Page**: `/` - Product cards integrated into main page
