@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { addCart } from "../redux/action";
+import React, { useState, useEffect, useRef } from "react";
 
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
 import ProductCard from "./ProductCard";
 import { fetchTestProducts, getProductsByCategory } from "../data/testProducts";
 
@@ -14,13 +10,7 @@ const Products = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
-  let componentMounted = true;
-
-  const dispatch = useDispatch();
-
-  const addProduct = (product) => {
-    dispatch(addCart(product));
-  };
+  const componentMounted = useRef(true);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -28,7 +18,7 @@ const Products = () => {
       try {
         // Use test data instead of fake store API
         const products = await fetchTestProducts();
-        if (componentMounted) {
+        if (componentMounted.current) {
           setData(products);
           setFilter(products);
           setLoading(false);
@@ -37,13 +27,13 @@ const Products = () => {
         console.error("Error fetching products:", error);
         setLoading(false);
       }
-
-      return () => {
-        componentMounted = false;
-      };
     };
 
     getProducts();
+    
+    return () => {
+      componentMounted.current = false;
+    };
   }, []);
 
   const Loading = () => {
